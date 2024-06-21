@@ -1,0 +1,165 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1718870684050-1
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: id_call_joke_seq
+            startValue: 1
+  - changeSet:
+      id: 1718870684050-2
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: id_joke_seq
+            startValue: 1
+  - changeSet:
+      id: 1718870684050-3
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: user_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1718870684050-4
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: user_role_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1718870684050-5
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_joke
+                  name: id_joke_seq
+                  type: BIGINT
+              - column:
+                  name: joketext
+                  type: VARCHAR(255)
+              - column:
+                  name: jokeinclude
+                  type: DATETIME
+              - column:
+                  name: jokechange
+                  type: DATETIME
+            tableName: joke
+  - changeSet:
+      id: 1718870684050-6
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_jokecall
+                  name: id_call_joke
+                  type: BIGINT
+              - column:
+                  name: id_joke
+                  type: BIGINT
+              - column:
+                  name: time_call
+                  type: DATETIME
+              - column:
+                  name: id_user_call
+                  type: BIGINT
+            tableName: joke_call
+  - changeSet:
+      id: 1718870684050-7
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user_roles
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: user_authority
+                  type: SMALLINT
+            tableName: user_roles
+  - changeSet:
+      id: 1718870684050-8
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: expired
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  name: enabled
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  name: locked
+                  type: BOOLEAN
+            tableName: users
+  - changeSet:
+      id: 1718870684050-9
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id_joke
+            baseTableName: joke_call
+            constraintName: FK_JOKECALL_ON_ID_JOKE
+            referencedColumnNames: id_joke_seq
+            referencedTableName: joke
+  - changeSet:
+      id: 1718870684050-10
+      author: user
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_roles
+            constraintName: FK_USER_ROLES_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+
